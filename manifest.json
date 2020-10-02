@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "takeFive",
+  "version": "1.0",
+
+  "description": "set timers that alert you when, you should take a moment to stand up / drink water or look away from the screen",
+  "icons": {
+    "48": "icons/palm.png"
+  },
+  "permissions": [
+    "alarms",
+    "storage"
+  ],
+  "browser_action": {
+    "default_icon": "icons/palm.png",
+    "default_title": "takeFive",
+    "default_popup": "popup/main.html"
+  }
+
+}
