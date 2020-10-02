@@ -2,13 +2,11 @@
 //we will eventually need to dynamically grab this / can we use a function?
 // var timerTitle = document.getElementById('standUp')
 var standTimer = document.getElementById('stand');
-var minutes = document.getElementById('minutes').value;
-var hours = document.getElementById('hours').value;
 var timerContainer = document.getElementById('timeRemain-container')
 var createTimer = document.querySelector('.standTime')
-
+var removeTimer = document.querySelector('.removeTime')
 createTimer.addEventListener('click', addTime)
-
+removeTimer.addEventListener('click',removeTime)
 function onError(error){
   console.log(error)
 }
@@ -28,21 +26,27 @@ function initialize(){
   }, onError)
 }
 
-function addTime(){
-  if(minutes){
-
-    var timerAmount = standTimer.value + minutes;
-  } else{
-    var timerAmount = standTimer.value + hours;
+function minutesOrHours(){
+  //to get a radio button value you have to submit a 'form'
+  var minutesHours = document.querySelector('input[name="time"]:checked').value
+  let timerAmount;
+  if(minutesHours === 'minutes'){
+  return timerAmount  = ' minutes';
+  } else {
+   return timerAmount = ' hours';
   }
+}
+
+function addTime(){
+ let timerAmnt = standTimer.value+ minutesOrHours()
   var timerName ='standup'
   var currTime = browser.storage.local.get(timerName);
   currTime.then((result)=>{
     var exists = Object.keys(result);
-    if(exists < 1 && timerName !== '' && timerAmount !== ''){
+    if(exists < 1 && timerName !== '' && timerAmnt !== ''){
       timerName.value = '';
-      timerAmount.value = '';
-      storeTime(timerName, timerAmount);
+      timerAmnt.value = '';
+      storeTime(timerName, timerAmnt);
     }
   }, onError)
 
@@ -67,4 +71,12 @@ function displayTime(name, time){
   timerDisplay.appendChild(timerShow);
   timer.appendChild(timerDisplay)
   timerContainer.appendChild(timer)
+}
+
+
+function removeTime(){
+  while(timerContainer.firstChild){
+    timerContainer.removeChild(timerContainer.firstChild)
+  }
+  browser.storage.local.clear()
 }
