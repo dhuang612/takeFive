@@ -7,6 +7,7 @@ var createTimer = document.querySelector('.standTime')
 var removeTimer = document.querySelector('.removeTime')
 createTimer.addEventListener('click', addTime)
 removeTimer.addEventListener('click',removeTime)
+
 function onError(error){
   console.log(error)
 }
@@ -25,6 +26,24 @@ function initialize(){
     }
   }, onError)
 }
+
+//timer function to count down the remaining time
+function timer(){
+  let minutes;
+  let hours;
+ var countDown = minutesOrHours();
+//  if(countDown === 'minutes'){
+//   minutes = parseInt(standTimer.value, 0);
+//  } else {
+//    hours = parseInt(standTimer.value, 0)
+//  }
+//  var current = (hours * 3600) + (minutes * 60)
+//  if(current > 0){
+
+//  }
+ console.log('hit the timer!')
+}
+
 
 function minutesOrHours(){
   //to get a radio button value you have to submit a 'form'
@@ -54,6 +73,7 @@ function addTime(){
 function storeTime(name, time){
   let storeTime = browser.storage.local.set({[name]: time})
   storeTime.then(()=>{
+    //maybe in here initialize a date time and do some sort of comparions
     displayTime(name, time);
   }, onError)
 }
@@ -63,10 +83,22 @@ function displayTime(name, time){
   var timerDisplay = document.createElement('div');
   var timerH = document.createElement('h2');
   var timerShow = document.createElement('p');
+  var startBtn = document.createElement('button');
+  startBtn.innerText="start timer";
+  startBtn.setAttribute('id', 'start')
+  setTimeout(()=>{
+    var button = document.getElementById('start');
+    if(button !== undefined){
+      button.addEventListener('click',timer)
+    }
+  },3000)
+
 
   timer.setAttribute('class', 'time')
+   //maybe in here initialize a date time and do some sort of comparions
   timerH.textContent = name;
   timerShow.textContent = time;
+  timerShow.appendChild(startBtn);
   timerDisplay.appendChild(timerH);
   timerDisplay.appendChild(timerShow);
   timer.appendChild(timerDisplay)
