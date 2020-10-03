@@ -1,10 +1,12 @@
 //store the dom elements we need to manipulate into variables
 //we will eventually need to dynamically grab this / can we use a function?
+
+
 // var timerTitle = document.getElementById('standUp')
-var standTimer = document.getElementById('stand');
-var timerContainer = document.getElementById('timeRemain-container')
-var createTimer = document.querySelector('.standTime')
-var removeTimer = document.querySelector('.removeTime')
+const standTimer = document.getElementById('stand');
+const timerContainer = document.getElementById('timeRemain-container')
+const createTimer = document.querySelector('.standTime')
+const removeTimer = document.querySelector('.removeTime')
 createTimer.addEventListener('click', addTime)
 removeTimer.addEventListener('click',removeTime)
 
@@ -28,20 +30,24 @@ function initialize(){
 }
 
 //timer function to count down the remaining time
-function timer(){
-  let minutes;
-  let hours;
- var countDown = minutesOrHours();
-//  if(countDown === 'minutes'){
-//   minutes = parseInt(standTimer.value, 0);
-//  } else {
-//    hours = parseInt(standTimer.value, 0)
-//  }
-//  var current = (hours * 3600) + (minutes * 60)
-//  if(current > 0){
+function startTimer(){
+  const currentTime = standTimer.value
+  const minutesHours = minutesOrHours();
+  console.log(typeof minutesHours)
+  const countdownTimer = new easytimer.Timer();
+  if(minutesHours === 'minutes'){
+    countdownTimer.start({countdown: true, startValues:{minutes: parseInt(currentTime)}})
+  }else {
+    countdownTimer.start({countdown: true, startValues:{hours: parseInt(currentTime)}})
+  }
+  const displayCountdown = document.querySelector('.countdown');
+  countdownTimer.addEventListener('secondsUpdated', (e)=>{
 
-//  }
- console.log('hit the timer!')
+    displayCountdown.innerText = `${countdownTimer.getTimeValues().hours.toString()}:${countdownTimer.getTimeValues().minutes.toString()}:${countdownTimer.getTimeValues().seconds.toString()}`;
+  })
+
+  // console.log(countdownTimer.getTimeValues())
+
 }
 
 
@@ -50,14 +56,14 @@ function minutesOrHours(){
   var minutesHours = document.querySelector('input[name="time"]:checked').value
   let timerAmount;
   if(minutesHours === 'minutes'){
-  return timerAmount  = ' minutes';
+  return timerAmount = 'minutes';
   } else {
-   return timerAmount = ' hours';
+   return timerAmount = 'hours';
   }
 }
 
 function addTime(){
- let timerAmnt = standTimer.value+ minutesOrHours()
+ let timerAmnt = `${standTimer.value} ${minutesOrHours()}`
   var timerName ='standup'
   var currTime = browser.storage.local.get(timerName);
   currTime.then((result)=>{
@@ -79,19 +85,23 @@ function storeTime(name, time){
 }
 
 function displayTime(name, time){
-  var timer = document.createElement('div');
-  var timerDisplay = document.createElement('div');
-  var timerH = document.createElement('h2');
-  var timerShow = document.createElement('p');
-  var startBtn = document.createElement('button');
+
+  let timer = document.createElement('div');
+  let timerDisplay = document.createElement('div');
+  let timerH = document.createElement('h2');
+  let timerShow = document.createElement('p');
+  let startBtn = document.createElement('button');
   startBtn.innerText="start timer";
-  startBtn.setAttribute('id', 'start')
+  startBtn.setAttribute('id', 'start');
+  let displayTimerCountdown = document.createElement('p');
+  displayTimerCountdown.setAttribute('class','countdown')
+  displayTimerCountdown.innerText="00:00:00"
   setTimeout(()=>{
-    var button = document.getElementById('start');
+    let button = document.getElementById('start');
     if(button !== undefined){
-      button.addEventListener('click',timer)
+      button.addEventListener('click', startTimer)
     }
-  },3000)
+  },400)
 
 
   timer.setAttribute('class', 'time')
@@ -101,6 +111,7 @@ function displayTime(name, time){
   timerShow.appendChild(startBtn);
   timerDisplay.appendChild(timerH);
   timerDisplay.appendChild(timerShow);
+  timerDisplay.appendChild(displayTimerCountdown)
   timer.appendChild(timerDisplay)
   timerContainer.appendChild(timer)
 }
