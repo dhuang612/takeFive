@@ -40,27 +40,20 @@ function startTimer(){
   }else {
     countdownTimer.start({countdown: true, startValues:{hours: parseInt(currentTime)}})
   }
-
-
   const displayCountdown = document.querySelector('.countdown');
   countdownTimer.addEventListener('secondsUpdated', (e)=>{
+    let color ='#0A81F5';
+    displayCountdown.style.color = `${color}`
+    displayCountdown.style.fontSize = '15px';
     displayCountdown.innerText = `${countdownTimer.getTimeValues().hours.toString()}:${countdownTimer.getTimeValues().minutes.toString()}:${countdownTimer.getTimeValues().seconds.toString()}`;
 
   })
 
   countdownTimer.addEventListener('stopped', (e)=>{
+    let color = '#EB1E14'
+    displayCountdown.style.color=`${color}`
+    displayCountdown.style.fontSize="25px"
     displayCountdown.innerText="Go stand up and walk around"
-    updateTime()
-  })
-
-
-}
-
-function updateTime(name){
-  let setTime = browser.storage.local.set({
-    standup: "0"
-  }).then(()=>{
-    console.log(standup)
   })
 }
 

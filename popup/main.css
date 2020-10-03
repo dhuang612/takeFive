@@ -17,3 +17,63 @@ body {
   padding: 2px;
   height: inherit;
 }
+
+#standUp{
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.standTime{
+  margin-top: 5px;
+  margin-right:5px;
+  background-color: white;
+  color: black;
+  border: 2px solid #0C30F3;
+  transition-duration: 0.4s;
+
+}
+
+.standTime:hover{
+  background-color: #0C30F3;
+  color:white;
+}
+
+.removeTime{
+  margin-top:5px;
+  margin-left: 5px;
+  background-color: white;
+  color: black;
+  border: 2px solid #EB1E14;
+  transition-duration: 0.4s;
+
+}
+
+.removeTime:hover{
+  background-color: #EB1E14; /* Green */
+  color: white;
+}
+
+#start {
+  margin-left: 5px;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
+  transition-duration: 0.4s;
+}
+
+#start:hover{
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.countdown{
+  font-size: 15px;
+  color: #0A81F5;
+}
+
+/*
+#0C30F3
+#EB1E14
+#0A81F5
+*/
