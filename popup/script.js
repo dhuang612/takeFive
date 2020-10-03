@@ -40,15 +40,30 @@ function startTimer(){
   }else {
     countdownTimer.start({countdown: true, startValues:{hours: parseInt(currentTime)}})
   }
+
+
   const displayCountdown = document.querySelector('.countdown');
   countdownTimer.addEventListener('secondsUpdated', (e)=>{
-
     displayCountdown.innerText = `${countdownTimer.getTimeValues().hours.toString()}:${countdownTimer.getTimeValues().minutes.toString()}:${countdownTimer.getTimeValues().seconds.toString()}`;
+
   })
 
-  // console.log(countdownTimer.getTimeValues())
+  countdownTimer.addEventListener('stopped', (e)=>{
+    displayCountdown.innerText="Go stand up and walk around"
+    updateTime()
+  })
+
 
 }
+
+function updateTime(name){
+  let setTime = browser.storage.local.set({
+    standup: "0"
+  }).then(()=>{
+    console.log(standup)
+  })
+}
+
 
 
 function minutesOrHours(){
@@ -95,7 +110,6 @@ function displayTime(name, time){
   startBtn.setAttribute('id', 'start');
   let displayTimerCountdown = document.createElement('p');
   displayTimerCountdown.setAttribute('class','countdown')
-  displayTimerCountdown.innerText="00:00:00"
   setTimeout(()=>{
     let button = document.getElementById('start');
     if(button !== undefined){

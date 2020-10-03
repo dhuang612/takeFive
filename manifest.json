@@ -9,12 +9,14 @@
   },
   "permissions": [
     "alarms",
+    "notifications",
     "storage"
   ],
-  "browser_action": {
+  "sidebar_action": {
     "default_icon": "icons/palm.png",
     "default_title": "takeFive",
-    "default_popup": "popup/main.html"
+    "default_panel": "popup/main.html",
+    "open_at_install":true
   }
 
 }
